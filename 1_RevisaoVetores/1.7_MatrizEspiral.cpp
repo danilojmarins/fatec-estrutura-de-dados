@@ -18,23 +18,36 @@ int main()
         }
     }
 
-    printf("%d \n", matriz[4][4]);
+    int iterations = tamanho + (tamanho - 1);
+    int total = 0;
 
-    int linha = 0;
-    int coluna = 0;
-
-    int total = tamanhoVetor;
-
-    while (total > 0)
+    while (total < tamanhoVetor)
     {
-        if (total > tamanhoVetor - tamanho)
+        for (int i = 0; i < iterations; i++)
         {
-            for (int j = 0; j < tamanho; j++)
+            if (iterations % 2 == 0)
             {
-                vetorEspiral[tamanhoVetor - total] = matriz[0][j];
-                total--;
+                for (int j = 0; j < tamanho; j++)
+                {
+                    vetorEspiral[total] = matriz[0][j];
+                }
             }
+
+            if (iterations % 2 == 1)
+            {
+                for (int j = 0; j < tamanho; j++)
+                {
+                    vetorEspiral[total] = matriz[j][0];
+                }
+            }
+
         }
+    }
+    
+
+    for (int a = 0; a < tamanhoVetor; a++)
+    {
+        printf("%d ", vetorEspiral[a]);
     }
 
 //    [0][0]
