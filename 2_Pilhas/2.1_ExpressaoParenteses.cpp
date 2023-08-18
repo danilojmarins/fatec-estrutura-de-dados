@@ -1,35 +1,30 @@
 #include <stdio.h>
 #include <string.h>
 #define MAX_SIZE 10
-
  
 
 struct Stack {
     char items[MAX_SIZE];
     int top;
 };
-
  
 
 // Inicializa a pilha
 void initialize(struct Stack *s) {
     s->top = -1;
 }
-
  
 
 // Verifica se a pilha está vazia
 int isEmpty(struct Stack *s) {
     return s->top == -1;
 }
-
  
 
 // Verifica se a pilha está cheia
 int isFull(struct Stack *s) {
     return s->top == MAX_SIZE - 1;
 }
-
  
 
 // Empilha um elemento na pilha
@@ -41,14 +36,13 @@ void push(struct Stack *s, int value) {
         s->items[s->top] = value;
     }
 }
-
  
 
 // Desempilha um elemento da pilha
 char pop(struct Stack *s) {
     if (isEmpty(s)) {
         printf("Erro: Pilha vazia\n");
-        return "";
+        return 'e';
     } else {
         int value = s->items[s->top];
         s->top--;
@@ -56,38 +50,52 @@ char pop(struct Stack *s) {
     }
 }
 
- 
 
 int expressionIsBalanced(char expression[])
 {
     struct Stack expStack;
     initialize(&expStack);
 
-    int balanced;
+    int balanced = 1;
 
     for (int i = 0; i < strlen(expression); i++)
     {
-        if (expression[i] == "(" || expression[i] == "[" || expression[i] == "{")
+        if (expression[i] == '(' || expression[i] == '[' || expression[i] == '{')
         {
             push(&expStack, expression[i]);
         }
-        else if (expression[i] == ")")
+        else if (expression[i] == ')')
         {
-            if (pop(&expStack) == "(")
+            if (pop(&expStack) == '(')
+            {
                 balanced = 1;
-            else balanced = 0;
+            }
+            else
+            {
+                balanced = 0;
+            }
         }
-        else if (expression[i] == "]")
+        else if (expression[i] == ']')
         {
-            if (pop(&expStack) == "(")
+            if (pop(&expStack) == '[')
+            {
                 balanced = 1;
-            else balanced = 0;
+            }
+            else
+            {
+                balanced = 0;
+            }
         }
-        else if (expression[i] == "}")
+        else if (expression[i] == '}')
         {
-            if (pop(&expStack) == "(")
+            if (pop(&expStack) == '{')
+            {
                 balanced = 1;
-            else balanced = 0;
+            }
+            else
+            {
+                balanced = 0;
+            }
         }
 
         if (balanced == 0) return balanced;
@@ -97,25 +105,20 @@ int expressionIsBalanced(char expression[])
 }
 
  
-
 int main() {
-    char expression[30];
+    char expression[MAX_SIZE];
 
     printf("Digite a expressão: ");
     scanf("%s", expression);
 
- 
-
     if (expressionIsBalanced(expression))
     {
-        printf("balanceado");
+        printf("balanceado \n");
     }
     else
     {
-        printf("desbalanceado");
+        printf("desbalanceado \n");
     }
-
- 
 
     return 0;
 }

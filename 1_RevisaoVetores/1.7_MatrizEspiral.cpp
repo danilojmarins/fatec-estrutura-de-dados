@@ -20,24 +20,67 @@ int main()
 
     int iterations = tamanho + (tamanho - 1);
     int total = 0;
+    int increment = 0;
+
+    int alternateRowH = 0;
+    int alternateRowL = tamanho - 1;
+
+    int alternateColumnH = 0;
+    int alternateColumnL = tamanho - 1;
 
     while (total < tamanhoVetor)
     {
         for (int i = 0; i < iterations; i++)
         {
-            if (iterations % 2 == 0)
+            if (i % 2 == 0)
             {
-                for (int j = 0; j < tamanho; j++)
+                if ((i / 2) % 2 == 0)
                 {
-                    vetorEspiral[total] = matriz[0][j];
+                    for (int j = 0 + increment; j < tamanho; j++)
+                    {
+                        vetorEspiral[total] = matriz[alternateRowH][j];
+                        total++;
+                    }
+
+                    alternateRowH++;
                 }
+
+                if ((i / 2) % 2 == 1)
+                {
+                    for (int j = (tamanho - 1) - increment; j >= tamanho - (tamanho - increment); j--)
+                    {
+                        vetorEspiral[total] = matriz[alternateRowL][j];
+                        total++;
+                    }
+
+                    alternateRowL--;
+                }
+
+                increment++;
             }
 
-            if (iterations % 2 == 1)
+            if (i % 2 == 1)
             {
-                for (int j = 0; j < tamanho; j++)
+                if ((i / 2) % 2 == 0)
                 {
-                    vetorEspiral[total] = matriz[j][0];
+                    for (int j = 0 + increment; j < tamanho; j++)
+                    {
+                        vetorEspiral[total] = matriz[j][alternateColumnL];
+                        total++;
+                    }
+
+                    alternateColumnL--;
+                }
+
+                if ((i / 2) % 2 == 1)
+                {
+                    for (int j = (tamanho - 1) - increment; j >= tamanho - (tamanho - increment); j--)
+                    {
+                        vetorEspiral[total] = matriz[j][alternateColumnH];
+                        total++;
+                    }
+
+                    alternateColumnH++;
                 }
             }
 
