@@ -4,7 +4,7 @@ int main()
 {
     int tamanho = 5;
     int matriz[tamanho][tamanho];
-    int inicio = 1;
+    int valor = 1;
 
     int tamanhoVetor = tamanho * tamanho;
     int vetorEspiral[tamanhoVetor];
@@ -13,14 +13,18 @@ int main()
     {
         for (int j = 0; j < tamanho; j++)
         {
-            matriz[i][j] = inicio;
-            inicio++;
+            matriz[i][j] = valor;
+            valor++;
         }
     }
 
     int iterations = tamanho + (tamanho - 1);
-    int total = 0;
-    int increment = 0;
+    int index = 0;
+
+    int incrementCB = 0;
+    int incrementCA = 0;
+    int incrementLA = 0;
+    int incrementLB = 0;
 
     int alternateRowH = 0;
     int alternateRowL = tamanho - 1;
@@ -28,103 +32,73 @@ int main()
     int alternateColumnH = 0;
     int alternateColumnL = tamanho - 1;
 
-    while (total < tamanhoVetor)
+    while (index < tamanhoVetor)
     {
-        for (int i = 0; i < iterations; i++)
+        for (int it = 0; it < iterations; it++)
         {
-            if (i % 2 == 0)
+            if (it % 2 == 0)
             {
-                if ((i / 2) % 2 == 0)
+                if ((it / 2) % 2 == 0)
                 {
-                    for (int j = 0 + increment; j < tamanho; j++)
+                    for (int la = incrementCA; la < tamanho - incrementCB; la++) // Linha Crescente
                     {
-                        vetorEspiral[total] = matriz[alternateRowH][j];
-                        total++;
+                        vetorEspiral[index] = matriz[alternateRowH][la];
+                        index++;
                     }
 
                     alternateRowH++;
+                    incrementLA++;
                 }
 
-                if ((i / 2) % 2 == 1)
+                if ((it / 2) % 2 == 1)
                 {
-                    for (int j = (tamanho - 1) - increment; j >= tamanho - (tamanho - increment); j--)
+                    for (int lb = tamanho - 1 - incrementCA; lb >= incrementCB; lb--) // Linha Decrescente
                     {
-                        vetorEspiral[total] = matriz[alternateRowL][j];
-                        total++;
+                        vetorEspiral[index] = matriz[alternateRowL][lb];
+                        index++;
                     }
 
                     alternateRowL--;
+                    incrementLB++;
                 }
-
-                increment++;
             }
 
-            if (i % 2 == 1)
+            if (it % 2 == 1)
             {
-                if ((i / 2) % 2 == 0)
+                if ((it / 2) % 2 == 0)
                 {
-                    for (int j = 0 + increment; j < tamanho; j++)
+                    for (int ca = incrementLA; ca < tamanho - incrementLB; ca++) // Coluna Crescente
                     {
-                        vetorEspiral[total] = matriz[j][alternateColumnL];
-                        total++;
+                        vetorEspiral[index] = matriz[ca][alternateColumnL];
+                        index++;
                     }
 
                     alternateColumnL--;
+                    incrementCA++;
                 }
 
-                if ((i / 2) % 2 == 1)
+                if ((it / 2) % 2 == 1)
                 {
-                    for (int j = (tamanho - 1) - increment; j >= tamanho - (tamanho - increment); j--)
+
+                    for (int cb = tamanho - 1 - incrementLB; cb >= incrementLA; cb--) // Coluna Decrescente
                     {
-                        vetorEspiral[total] = matriz[j][alternateColumnH];
-                        total++;
+                        vetorEspiral[index] = matriz[cb][alternateColumnH];
+                        index++;
                     }
 
                     alternateColumnH++;
+                    incrementCB++;
                 }
             }
-
         }
     }
-    
 
-    for (int a = 0; a < tamanhoVetor; a++)
+    for (int k = 0; k < tamanhoVetor; k++)
     {
-        printf("%d ", vetorEspiral[a]);
+        printf("%d ", vetorEspiral[k]);   
     }
 
-//    [0][0]
-//    [0][1]
-//    [0][2]
-//    [0][3]
-//    [0][4]
-//
-//    [1][4]
-//    [2][4]
-//    [3][4]
-//    [4][4]
-//
-//    [4][3]
-//    [4][2]
-//    [4][1]
-//    [4][0]
-//
-//    [3][0]
-//    [2][0]
-//    [1][0]
-//
-//    [1][1]
-//    [1][2]
-//    [1][3]
-//
-//    [2][3]
-//    [3][3]
-//
-//    [3][2]
-//    [3][1]
-//
-//    [2][1]
-//    [2][3]
+    printf("\n");
     
     return 0;
 }
