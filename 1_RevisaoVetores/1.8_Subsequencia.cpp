@@ -2,33 +2,51 @@
 
 int main()
 {
-    int vetor[5] = {3,10,2,1,20};
+    int tamanho = 5;
+    int vetor[tamanho] = {3,10,2,1,20};
 
     int counter = 0;
+    int agregado = 0;
 
-    int agreagado = 0;
+    int counterVetor[tamanho];
+    int agregadoVetor[tamanho];
 
-    printf("Maior subsequência crescente: \n");
+    printf("Maior Subsequência Crescente: ");
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < tamanho; i++)
     {
-        for (int j = 0; j < 5; j++)
+        counterVetor[counter] = vetor[i];
+        counter++;
+
+        for (int j = 0; j < tamanho; j++)
         {
-            if (vetor[j] >= vetor[i] && j >= i)
+            if (vetor[j] > vetor[i] && j >= i)
             {
-                printf("%d ", vetor[j]);
+                counterVetor[counter] = vetor[j];
+                counter++;
             }
         }
-        
-        if (counter > agreagado)
+
+        if (counter > agregado)
         {
-            agreagado = counter;
+            agregado = counter;
+            
+            for (int l = 0; l < tamanho; l++)
+            {
+                agregadoVetor[l] = counterVetor[l]; 
+                counterVetor[l] = 0;
+            }
         }
 
         counter = 0;
     }
 
-    printf("%d \n", agreagado);
+    for (int k = 0; k < agregado; k++)
+    {
+        printf("%d ", agregadoVetor[k]);
+    }
+
+    printf("\n");
 
     return 0;
 }
