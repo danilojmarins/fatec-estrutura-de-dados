@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAX_SIZE 10
+#include <ctype.h>
+#define MAX_SIZE 30
  
 
 struct Stack {
-    char items[MAX_SIZE];
+    int items[MAX_SIZE];
     int top;
 };
  
@@ -40,10 +41,10 @@ void push(struct Stack *s, int value) {
  
 
 // Desempilha um elemento da pilha
-char pop(struct Stack *s) {
+int pop(struct Stack *s) {
     if (isEmpty(s)) {
         printf("Erro: Pilha vazia\n");
-        return 'e';
+        return -1;
     } else {
         int value = s->items[s->top];
         s->top--;
@@ -57,39 +58,65 @@ int result(char expression[])
     struct Stack expStack;
     initialize(&expStack);
 
+	char str[30] = "";
     int result;
+
+    int primeiro;
+    int segundo;
 
     for (int i = 0; i < strlen(expression); i++)
     {
         if (expression[i]  == '+')
         {
-            push(&expStack, pop(&expStack) + pop(&expStack));
+            segundo = pop(&expStack);
+            primeiro = pop(&expStack);
+
+            push(&expStack, primeiro + segundo);
         }
         else if (expression[i]  == '-')
         {
-            push(&expStack, pop(&expStack) - pop(&expStack));
+            segundo = pop(&expStack);
+            primeiro = pop(&expStack);
+
+            push(&expStack, primeiro - segundo);
         }
         else if (expression[i]  == '*')
         {
-            push(&expStack, pop(&expStack) * pop(&expStack));
+            segundo = pop(&expStack);
+            primeiro = pop(&expStack);
+
+            push(&expStack, primeiro * segundo);
         }
         else if (expression[i]  == '/')
         {
-            push(&expStack, pop(&expStack) / pop(&expStack));
-        }
-    }
+            segundo = pop(&expStack);
+            primeiro = pop(&expStack);
 
-    result = atoi(expression);
+            push(&expStack, primeiro / segundo);
+        }
+        else if (expression[i] == ' ')
+        {
+        	str[0] = '\0';
+		}
+		else
+		{
+			strncat(str, &expression[i], 1);
+			
+			if (expression[i + 1] == ' ')
+			{
+				push(&expStack, atoi(str));
+			}
+		}
+    }
+    
+    result = pop(&expStack);
 
     return result;
 }
 
  
 int main() {
-    char expression[MAX_SIZE];
-
-    printf("Digite a expressão: ");
-    scanf("%s", expression);
+    char expression[MAX_SIZE] = "4 2 5 * + 1 3 2 * + /";
 
     printf("%d \n", result(expression));
 
