@@ -51,6 +51,23 @@ int pop(struct Stack *s) {
         return value;
     }
 }
+
+void hanoi(char inicio, char alvo,  char auxiliar, int valor)
+{
+    if (valor >= 1)
+    {
+        hanoi(inicio, auxiliar, alvo, valor - 1);
+        
+        //push(alvo, pop(inicio));
+        printf("de %c para %c \n", inicio, alvo);
+
+        hanoi(auxiliar, alvo, inicio, valor - 1);
+    }
+    else
+    {
+        return;
+    }
+}
  
 int main() {
     int discos = 3;
@@ -63,24 +80,17 @@ int main() {
     initialize(&B);
     initialize(&C);
 
-    push(&A, 3);
-    push(&A, 2);
-    push(&A, 1);
+    for (int i = discos; i > 0; i--)
+    {
+        push(&A, i);
+    }
+
+    hanoi('A', 'C', 'B', discos);
+
+    for (int i = 0; i < discos; i++)
+    {
+        //printf("%d ", pop(&C));
+    }
 
     return 0;
 }
-
-
-// 1 - A B C
-
-// 1 - A C B
-// 2 - A B C
-// 1 - B A C
-
-// 1 - A B C
-// 2 - A C B
-// 1 - C A B
-// 3 - A B C
-// 1 - B C A
-// 2 - B A C
-// 1 - A B C
