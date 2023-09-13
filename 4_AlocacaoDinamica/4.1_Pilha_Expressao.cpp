@@ -1,31 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#define MAX_SIZE 10
- 
 
 struct Stack {
-    char items[MAX_SIZE];
+    int *items;
     int top;
+    int max_size;
 };
- 
 
 // Inicializa a pilha
-void initialize(struct Stack *s) {
+void initialize(struct Stack *s, int size) {
+    s->max_size = size;
+    s->items = (int *)malloc(size * sizeof(int));
     s->top = -1;
 }
- 
 
 // Verifica se a pilha está vazia
 int isEmpty(struct Stack *s) {
     return s->top == -1;
 }
- 
 
 // Verifica se a pilha está cheia
 int isFull(struct Stack *s) {
-    return s->top == MAX_SIZE - 1;
+    return s->top == s->max_size - 1;
 }
- 
 
 // Empilha um elemento na pilha
 void push(struct Stack *s, int value) {
@@ -36,13 +34,12 @@ void push(struct Stack *s, int value) {
         s->items[s->top] = value;
     }
 }
- 
 
 // Desempilha um elemento da pilha
-char pop(struct Stack *s) {
+int pop(struct Stack *s) {
     if (isEmpty(s)) {
         printf("Erro: Pilha vazia\n");
-        return 'e';
+        return -1;
     } else {
         int value = s->items[s->top];
         s->top--;
@@ -50,11 +47,15 @@ char pop(struct Stack *s) {
     }
 }
 
+// Libera a memória alocada pela pilha
+void destroy(struct Stack *s) {
+    free(s->items);
+}
 
-int expressionIsBalanced(char expression[])
+int expressionIsBalanced(char expression[], int size)
 {
     struct Stack expStack;
-    initialize(&expStack);
+    initialize(&expStack, size);
 
     int balanced = 1;
 
@@ -101,14 +102,17 @@ int expressionIsBalanced(char expression[])
         if (balanced == 0) return balanced;
     }
 
+    destroy(&expStack);
+
     return balanced;
 }
 
- 
 int main() {
-    char expression[MAX_SIZE] = "({[]})";
+    int expressionSize = 10;
 
-    if (expressionIsBalanced(expression))
+    char expression[expressionSize] = "({[]})";
+
+    if (expressionIsBalanced(expression, expressionSize))
     {
         printf("balanceado \n");
     }
