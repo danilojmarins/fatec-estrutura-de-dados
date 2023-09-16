@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Estrutura Elemento da Lista
 struct Node
 {
     int data;
     struct Node* next;
 };
 
+// Estrutura da Lista
 struct LinkedList
 {
     struct Node* head;
 };
 
+// Cria uma Lista Encadeada
 struct LinkedList* createLinkedList()
 {
     struct LinkedList* list = (struct LinkedList*)malloc(sizeof(struct LinkedList));
@@ -19,6 +22,7 @@ struct LinkedList* createLinkedList()
     return list;
 }
 
+// Insere um elemento no início da lista
 void insertAtBeginning(struct LinkedList* list, int data)
 {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
@@ -30,6 +34,8 @@ void insertAtBeginning(struct LinkedList* list, int data)
     return;
 }
 
+
+// Insere um elemento no final da lista
 void insertAtEnd(struct LinkedList* list, int data)
 {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
@@ -47,6 +53,8 @@ void insertAtEnd(struct LinkedList* list, int data)
     current->next = newNode;
 }
 
+
+// Insere um elemento em uma posição específica da lista
 void insertAtPosition(struct LinkedList* list, int data, int position)
 {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
@@ -87,6 +95,7 @@ void insertAtPosition(struct LinkedList* list, int data, int position)
     newNode->next = temp;
 }
 
+// Remove o primeiro elemento da lista
 void removeFirst(struct LinkedList* list)
 {
     struct Node* temp = list->head;
@@ -95,6 +104,7 @@ void removeFirst(struct LinkedList* list)
     free(temp);
 }
 
+// Remove o último elemento da lista
 void removeLast(struct LinkedList* list)
 {
     struct Node* current = list->head;
@@ -109,6 +119,7 @@ void removeLast(struct LinkedList* list)
     current->next = NULL;
 }
 
+// Remove um elemento em uma posição específica da lista
 void removeAtPosition(struct LinkedList* list, int position)
 {
     if (position < 0)
@@ -148,6 +159,7 @@ void removeAtPosition(struct LinkedList* list, int position)
     return;
 }
 
+// Retorna a primeira ocorrência de um valor na lista
 int findByValue(struct LinkedList* list, int value)
 {
     struct Node* current = list->head;
@@ -166,6 +178,7 @@ int findByValue(struct LinkedList* list, int value)
     return -1;
 }
 
+// Lista todas as posições de um valor na lista
 void findAllByValue(struct LinkedList* list, int value)
 {
     struct Node* current = list->head;
@@ -186,6 +199,7 @@ void findAllByValue(struct LinkedList* list, int value)
     printf("\n");
 }
 
+// Remove todas as ocorrências de um valor na lista
 void removeByValue(struct LinkedList* list, int value)
 {
     int position = 0;
@@ -197,6 +211,8 @@ void removeByValue(struct LinkedList* list, int value)
     }
 }
 
+
+// Lista todos os valores da lista
 void displayList(struct LinkedList* list)
 {
     struct Node* current = list->head;
@@ -208,6 +224,8 @@ void displayList(struct LinkedList* list)
     }
 }
 
+
+// Desaloca o espaço em memória da lista e dos elementos
 void freeList(struct LinkedList* list)
 {
     struct Node* current = list->head;
